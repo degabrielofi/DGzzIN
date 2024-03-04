@@ -38,7 +38,7 @@ exports.run = async (client, message, args) => {
       },
       {
         name: "<:folder:1214053377923616798> Exemplos:",
-        value: "`d$lula Eu não vou enganar o povo mais uma vez`",
+        value: "`d$lula Picanha e cervejinha é tudo que a gente quer`",
         inline: true,
       }
     );
