@@ -16,7 +16,7 @@ module.exports = {
     } catch (error) {
       let degabrielofierr = new MessageEmbed()
         .setDescription(
-          `<a:Incorreto:940987809299316816>**| Este País não existe ou os dados não estão sendo coletados!**`
+          `<a:Incorreto:1214051678089777212>**| Este País não existe ou os dados não estão sendo coletados!**`
         )
         .setFooter(`Requisitado por: ${message.author.tag}`)
         .setColor("RED");
@@ -32,8 +32,8 @@ module.exports = {
     const embed = new MessageEmbed()
       .setTitle(
         args[0]
-          ? `<:Covid19:935652863097589811> COVID-19 NO ${args[0].toUpperCase()}`
-          : " <:Covid19:935652863097589811> TOTAL DE CASOS DE COVID-19 NO MUNDO"
+          ? `<:Covid:1214053392217804810> COVID-19 NO ${args[0].toUpperCase()}`
+          : " <:Covid:1214053392217804810> TOTAL DE CASOS DE COVID-19 NO MUNDO"
       )
       .setColor("#471516")
       .setThumbnail(
@@ -48,22 +48,22 @@ module.exports = {
       )
       .addFields(
         {
-          name: "<:Vermelho:935650659980677160> Total De Casos:",
+          name: "<:Vermelho:1214053386085994586> Total De Casos:",
           value: `\`(${corona.cases.toLocaleString()})\``,
           inline: true,
         },
         {
-          name: "<:Vermelho:935650659980677160> Total De Mortes:",
+          name: "<:Vermelho:1214053386085994586> Total De Mortes:",
           value: `\`(${corona.deaths.toLocaleString()})\``,
           inline: true,
         },
         {
-          name: "<:Disponivel:935650640129048637> Total De Recuperações:",
+          name: "<:Verde:1214053384278253598> Total De Recuperações:",
           value: `\`(${corona.recovered.toLocaleString()})\``,
           inline: true,
         },
         {
-          name: "<:Vermelho:935650659980677160> Casos Ativos:",
+          name: "<:Vermelho:1214053386085994586> Casos Ativos:",
           value: `\`(${corona.active.toLocaleString()})\``,
           inline: true,
         },
@@ -73,19 +73,19 @@ module.exports = {
           inline: true,
         },
         {
-          name: "<:Vermelho:935650659980677160> Casos Críticos:",
+          name: "<:Vermelho:1214053386085994586> Casos Críticos:",
           value: `\`(${corona.critical.toLocaleString()})\``,
           inline: true,
         },
         {
-          name: "<:Disponivel:935650640129048637> Recuperações De Hoje:",
+          name: "<:Verde:1214053384278253598> Recuperações De Hoje:",
           value: `\`(${corona.todayRecovered
             .toLocaleString()
             .replace("-", "")})\``,
           inline: true,
         },
         {
-          name: "<:Vermelho:935650659980677160> Mortes De hoje:",
+          name: "<:Vermelho:1214053386085994586> Mortes De hoje:",
           value: `\`(${corona.todayDeaths.toLocaleString()})\``,
           inline: true,
         }

@@ -25,13 +25,13 @@ module.exports = {
       .setColor("#471516")
       .addFields(
         {
-          name: "<:Descricao:933441130886991945> Descrição:",
+          name: "<:Descricao:1214053842162024508> Descrição:",
           value:
             "Utilize este comando para banir um usuário do seu servidor. Escreva com `d$banir (usuário) (motívo).`",
           inline: true,
         },
         {
-          name: "<:Sinonimos:933441130551468043> Sinônimos:",
+          name: "<:Sinonimos:1214053417933340692> Sinônimos:",
           value: "`d$banir` `d$ban`",
           inline: true,
         },
@@ -41,7 +41,7 @@ module.exports = {
           inline: true,
         },
         {
-          name: "<:Exemplos:933441131193180170> Exemplos:",
+          name: "<:folder:1214053377923616798> Exemplos:",
           value:
             "`d$banir @YGɑbrielGØDs Divulgação`\n`d$banir 812911319695097856 spam no chat`",
           inline: true,
@@ -100,13 +100,13 @@ module.exports = {
       .setColor("#471516")
       .addFields(
         {
-          name: "<:Descricao:933441130886991945> Descrição:",
+          name: "<:Descricao:1214053842162024508> Descrição:",
           value:
             "Utilize este comando para banir um usuário do seu servidor. Escreva com `d$banir (usuário) (motívo).`",
           inline: true,
         },
         {
-          name: "<:Sinonimos:933441130551468043> Sinônimos:",
+          name: "<:Sinonimos:1214053417933340692> Sinônimos:",
           value: "`d$banir` `d$ban`",
           inline: true,
         },
@@ -116,7 +116,7 @@ module.exports = {
           inline: true,
         },
         {
-          name: "<:Exemplos:933441131193180170> Exemplos:",
+          name: "<:folder:1214053377923616798> Exemplos:",
           value:
             "`d$banir @YGɑbrielGØDs Divulgação`\n`d$banir 812911319695097856 spam no chat`",
           inline: true,
@@ -136,11 +136,11 @@ module.exports = {
       });
 
     let confirm = new MessageEmbed()
-      .setTitle("<a:Sirene:936492407770476614> CONFIRME O BANIMENTO")
+      .setTitle("<a:Sirene:1214051670343028776> CONFIRME O BANIMENTO")
       .setColor("#471515")
       .setThumbnail(message.author.displayAvatarURL({ format: "png" }))
       .setDescription(
-        `<:Faixa:936413517488222240> Você deseja banir ${usu} do servidor?\n<:Faixa:936413517488222240> ID: \`${usu.id}\`\n<:Faixa:936413517488222240> Confirme com: \`Sim!\`\n <:Faixa:936413517488222240> Recuse com: \`Não\``
+        `<:Faixa:1214053411218268160> Você deseja banir ${usu} do servidor?\n<:Faixa:1214053411218268160> ID: \`${usu.id}\`\n<:Faixa:1214053411218268160> Confirme com: \`Sim!\`\n <:Faixa:1214053411218268160> Recuse com: \`Não\``
       )
       .setFooter(
         `Comando requisitado por: ${message.author.tag}`,
@@ -192,10 +192,10 @@ module.exports = {
         });
 
         const embed = new MessageEmbed()
-          .setTitle(`<:Usuario_Punido:936413495476510760> Você foi banido!`)
+          .setTitle(`<:punido:1214053415244660787> Você foi banido!`)
           .setThumbnail("https://i.gifer.com/7yOa.gif")
           .setDescription(
-            `<:Faixa:936413517488222240> **Servidor:**\` ${message.guild.name}\`\n<:Faixa:936413517488222240> **Banido por:**\` ${message.author.tag}\`\n<:Faixa:936413517488222240> **Motivo:**\` ${reason}\``
+            `<:Faixa:1214053411218268160> **Servidor:**\` ${message.guild.name}\`\n<:Faixa:1214053411218268160> **Banido por:**\` ${message.author.tag}\`\n<:Faixa:1214053411218268160> **Motivo:**\` ${reason}\``
           )
           .setColor("RED")
           .setTimestamp()
@@ -205,7 +205,7 @@ module.exports = {
           );
 
         const banmsg = new MessageEmbed()
-          .setTitle("<:Usuario_Punido:936413495476510760> Usuário punido!")
+          .setTitle("<:punido:1214053415244660787> Usuário punido!")
           .setColor("RED")
           .setThumbnail(message.author.displayAvatarURL({ format: "png" }))
           .setFooter(
@@ -215,12 +215,12 @@ module.exports = {
           .setTimestamp()
           .addFields(
             {
-              name: "<:Faixa:936413517488222240> Usuário banido:",
+              name: "<:Faixa:1214053411218268160> Usuário banido:",
               value: `Nick: ${pessoa}\n ID: \`${membro.id}\``,
               inline: true,
             },
             {
-              name: "<:Faixa:936413517488222240> Banido por:",
+              name: "<:Faixa:1214053411218268160> Banido por:",
               value: `Nick: ${message.author}\n ID: \`${message.author.id}\``,
               inline: true,
             },
@@ -230,7 +230,7 @@ module.exports = {
               inline: true,
             },
             {
-              name: "<:Faixa:936413517488222240> Motivo do banimento:",
+              name: "<:Faixa:1214053411218268160> Motivo do banimento:",
               value: `\`${reason}\``,
               inline: true,
             }
@@ -247,7 +247,7 @@ module.exports = {
         let degabrielofinao = new MessageEmbed()
 
           .setDescription(
-            `<a:Incorreto:940987809299316816>**| Você cancelou a ação de Banimento!**`
+            `<a:Incorreto:1214051678089777212>**| Você cancelou a ação de Banimento!**`
           )
           .setFooter(`Requisitado por: ${message.author.tag}`)
           .setColor("RED");
