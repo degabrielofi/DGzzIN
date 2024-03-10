@@ -42,9 +42,7 @@ exports.run = async (client, message, args) => {
       }
     );
 
-  let img = jimp.read(
-    "https://cdn.discordapp.com/attachments/920053328925294612/922957943102668840/dilma.jpg"
-  );
+  let img = jimp.read("https://i.imgur.com/ZiPRCJX.jpeg");
   if (!args[0])
     return message.reply({
       content: `${message.author}`,
@@ -57,7 +55,7 @@ exports.run = async (client, message, args) => {
       image.getBuffer(jimp.MIME_PNG, (err, i) => {
         message.reply({
           content: `${message.author}`,
-          files: [{ attachment: i, name: "dilma.jpg" }],
+          files: [{ attachment: i, name: "dilma.jpeg" }],
         });
       });
     });

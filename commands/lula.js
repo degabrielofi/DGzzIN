@@ -43,9 +43,7 @@ exports.run = async (client, message, args) => {
       }
     );
 
-  let img = jimp.read(
-    "https://cdn.discordapp.com/attachments/920053328925294612/922953517382131712/lula.jpg"
-  );
+  let img = jimp.read("https://i.imgur.com/F4ncXEM.png");
   if (!args[0])
     return message.reply({
       content: `${message.author}`,
@@ -58,7 +56,7 @@ exports.run = async (client, message, args) => {
       image.getBuffer(jimp.MIME_PNG, (err, i) => {
         message.reply({
           content: `${message.author}`,
-          files: [{ attachment: i, name: "lula.jpg" }],
+          files: [{ attachment: i, name: "lula.png" }],
         });
       });
     });
