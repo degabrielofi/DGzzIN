@@ -163,7 +163,7 @@ module.exports = {
     let confirm = new MessageEmbed()
       .setTitle("<a:Sirene:1214051670343028776> CONFIRME A EXPULSÃO")
       .setColor("#471515")
-      .setThumbnail(usu.displayAvatarURL({ format: "png" })) // Correção aqui
+      .setThumbnail(usu.displayAvatarURL({ format: "png" }))
       .setDescription(
         `<:Faixa:1214053411218268160> Você deseja expulsar ${usu} do servidor?\n<:Faixa:1214053411218268160> ID: \`${usu.id}\`\n<:Faixa:1214053411218268160> Confirme com: \`Sim!\`\n <:Faixa:1214053411218268160> Recuse com: \`Não\``
       )
@@ -254,26 +254,21 @@ module.exports = {
         });
 
         channel.send({ embeds: [banmsg] });
-      }
-
-      if (interaction.customId === "nao") {
-        let degabrielofinao = new MessageEmbed()
+      } else if (interaction.customId === "nao") {
+        const degabrielofinao = new MessageEmbed()
           .setDescription(
-            `<a:Incorreto:1214051678089777212>**| Você cancelou a ação de expulsão!**`
+            `<a:Incorreto:1214051678089777212>**| Você cancelou a ação de Expulsão!**`
           )
           .setFooter(`Requisitado por: ${message.author.tag}`)
           .setColor("RED");
 
-        enviado
-          .edit({
-            content: "",
-            embeds: [degabrielofinao],
-            components: [],
-          })
-          .then((msg) => {
-            message.delete();
-            setTimeout(() => msg.delete(), 15000);
-          });
+        await interaction.reply({
+          content: `${interaction.user}`,
+          embeds: [degabrielofinao],
+          ephemeral: true,
+        });
+
+        setTimeout(() => enviado.delete(), 5000);
       }
     });
   },
