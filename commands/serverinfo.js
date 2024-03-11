@@ -3,7 +3,7 @@ const moment = require("moment");
 moment.locale("pt-BR");
 
 module.exports = {
-  name: "teste",
+  name: "serverinfo",
   aliases: [""],
 };
 

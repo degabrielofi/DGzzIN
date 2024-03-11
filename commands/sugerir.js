@@ -44,11 +44,9 @@ module.exports = {
         embeds: [degabrielofiembed],
       });
 
-    let prefixo = "d$";
     let channelSUGERIR = db.fetch(`channelSUGERIR_${message.guild.id}`);
 
     let degabrielofisetchannel = new Discord.MessageEmbed()
-
       .setDescription(
         `<a:Incorreto:1214051678089777212>**| Este servidor não setou nem um canal de sugestões!**`
       )

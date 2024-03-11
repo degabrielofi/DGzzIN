@@ -15,19 +15,39 @@ module.exports.run = (client, message, args) => {
     message.member;
 
   let status;
-  switch (baliza_user.presence.status) {
-    case "online":
-      status = "Online";
-      break;
-    case "dnd":
-      status = "Não Pertubar";
-      break;
-    case "idle":
-      status = "Ausente";
-      break;
-    case "offline":
-      status = "Offline";
-      break;
+  if (baliza_user) {
+    const userPresence = baliza_user.presence;
+
+    if (userPresence && userPresence.status) {
+      status = getStatusFromPresence(userPresence) || "Offline";
+    } else {
+      status = "Desconhecido";
+    }
+  } else {
+    status = "Desconhecido";
+  }
+
+  // Função auxiliar para obter o status apropriado
+  function getStatusFromPresence(presence) {
+    const activities = presence.activities;
+    if (activities.length > 0) {
+      return activities[0].type === "CUSTOM_STATUS"
+        ? activities[0].state
+        : activities[0].name;
+    } else {
+      switch (presence.status) {
+        case "online":
+          return "Online";
+        case "dnd":
+          return "Não Perturbar";
+        case "idle":
+          return "Ausente";
+        case "offline":
+          return "Offline";
+        default:
+          return "Desconhecido";
+      }
+    }
   }
 
   const flags = {
@@ -87,111 +107,71 @@ module.exports.run = (client, message, args) => {
         name: `\\📅 Data de criação:`,
         value: `\`${moment(user.createdAt).format("DD/MM/YYYY")} ${moment(
           user.createdAt
-        )
-          .startOf("Day")
-          .toNow()}\``,
+        ).fromNow()}\``,
         inline: true,
       },
       {
         name: `\\🌟 Entrou em:`,
         value: `\`${moment(Membro.joinedAt).format("DD/MM/YYYY")} ${moment(
           Membro.joinedAt
-        )
-          .startOf("Day")
-          .toNow()}\``,
+        ).fromNow()}\``,
         inline: true,
       },
       {
         name: "\\👥 Autor do comando:",
         value: `\`${message.author.tag}\``,
-        incline: true,
+        inline: true,
       }
     );
 
   message
     .reply({ content: `${message.author}`, embeds: [degabrielofiembed] })
-    .then((msg) => {
-      msg.react("⏪");
-      msg.react("⏩");
-      let filtro_1 = (r, u) =>
-        r.emoji.name === "⏪" && u.id === message.author.id;
-      let coletor_1 = msg.createReactionCollector({ filter: filtro_1 });
-      let filtro_2 = (r, u) =>
-        r.emoji.name === "⏩" && u.id === message.author.id;
-      let coletor_2 = msg.createReactionCollector({ filter: filtro_2 });
 
-      coletor_1.on("collect", (degabrielofi) => {
-        degabrielofi.users.remove(message.author.id);
-
-        let degabrielofiembed = new Discord.MessageEmbed()
-          .setAuthor(
-            `${user.username} 🕵️`,
-            user.displayAvatarURL({ dynamic: true })
-          )
-          .setFooter(`Page 1 / 2`)
-          .setColor("BLUE")
-          .setThumbnail(avatar)
-          .setTimestamp()
-          .addFields(
+    .then(async (msg) => {
+      const pages = [
+        {
+          author: `${user.username} 🕵️`,
+          footer: "Page 1 / 2",
+          color: "BLUE",
+          thumbnail: avatar,
+          timestamp: true,
+          fields: [
             {
               name: `\\#️⃣ Tag do discord:`,
               value: `\`${user.tag}\``,
               inline: true,
             },
-            {
-              name: `\\🆔 ID:`,
-              value: `\`${user.id}\``,
-              inline: true,
-            },
-            {
-              name: `\\💤 Status:`,
-              value: `\`${status}\``,
-              inline: true,
-            },
-            {
-              name: "\u200b",
-              value: `\u200b`,
-              inline: true,
-            },
+            { name: `\\🆔 ID:`, value: `\`${user.id}\``, inline: true },
+            { name: `\\💤 Status:`, value: `\`${status}\``, inline: true },
+            { name: "\u200b", value: `\u200b`, inline: true },
             {
               name: `\\📅 Data de criação:`,
               value: `\`${moment(user.createdAt).format("DD/MM/YYYY")} ${moment(
                 user.createdAt
-              )
-                .startOf("Day")
-                .toNow()}\``,
+              ).fromNow()}\``,
               inline: true,
             },
             {
               name: `\\🌟 Entrou em:`,
               value: `\`${moment(Membro.joinedAt).format(
                 "DD/MM/YYYY"
-              )} ${moment(Membro.joinedAt).startOf("Day").toNow()}\``,
+              )} ${moment(Membro.joinedAt).fromNow()}\``,
               inline: true,
             },
             {
               name: "\\👥 Autor do comando:",
               value: `\`${message.author.tag}\``,
-              incline: true,
-            }
-          );
-
-        msg.edit({ content: `${message.author}`, embeds: [degabrielofiembed] });
-      });
-
-      coletor_2.on("collect", (degabrielofi) => {
-        degabrielofi.users.remove(message.author.id);
-
-        const degabrielofiuser2 = new Discord.MessageEmbed()
-          .setAuthor(
-            `${user.username} 🕵️`,
-            user.displayAvatarURL({ dynamic: true })
-          )
-          .setFooter(`Page 2 / 2`)
-          .setColor("BLUE")
-          .setThumbnail(avatar)
-          .setTimestamp()
-          .addFields(
+              inline: true,
+            },
+          ],
+        },
+        {
+          author: `${user.username} 🕵️`,
+          footer: "Page 2 / 2",
+          color: "BLUE",
+          thumbnail: avatar,
+          timestamp: true,
+          fields: [
             {
               name: `\\📸 Avatar:`,
               value: `**[Clique aqui](${member.user.displayAvatarURL({
@@ -220,7 +200,7 @@ module.exports.run = (client, message, args) => {
             {
               name: "\\👥 Autor do comando:",
               value: `\`${message.author.tag}\``,
-              incline: true,
+              inline: true,
             },
             {
               name: `\\💼 Cargos:`,
@@ -229,10 +209,60 @@ module.exports.run = (client, message, args) => {
                 .join(" ")
                 .replace("@everyone", " ")}`,
               inline: true,
-            }
-          );
+            },
+          ],
+        },
+      ];
 
-        msg.edit({ content: `${message.author}`, embeds: [degabrielofiuser2] });
+      let currentPage = 0;
+
+      const updateEmbed = async () => {
+        const page = pages[currentPage];
+        const embed = new Discord.MessageEmbed()
+          .setAuthor(page.author, user.displayAvatarURL({ dynamic: true }))
+          .setFooter(page.footer)
+          .setColor(page.color)
+          .setThumbnail(page.thumbnail)
+          .setTimestamp(page.timestamp);
+
+        embed.addFields(...page.fields);
+
+        await msg.edit({ content: `${message.author}`, embeds: [embed] });
+      };
+
+      await msg.react("⏪");
+      await msg.react("⏩");
+
+      const filter = (reaction, user) => {
+        return (
+          ["⏪", "⏩"].includes(reaction.emoji.name) &&
+          user.id === message.author.id
+        );
+      };
+
+      const collector = msg.createReactionCollector({
+        filter,
+        time: 60000, // Tempo limite em milissegundos (60 segundos neste caso)
       });
+
+      collector.on("collect", async (reaction, user) => {
+        reaction.users.remove(user.id);
+
+        if (reaction.emoji.name === "⏪") {
+          currentPage = (currentPage - 1 + pages.length) % pages.length;
+        } else if (reaction.emoji.name === "⏩") {
+          currentPage = (currentPage + 1) % pages.length;
+        }
+
+        await updateEmbed();
+      });
+
+      collector.on("end", () => {
+        msg.reactions
+          .removeAll()
+          .catch((error) => console.error("Failed to clear reactions:", error));
+      });
+
+      await updateEmbed();
     });
 };

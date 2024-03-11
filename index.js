@@ -9,6 +9,7 @@ const client = new Discord.Client({
 });
 const config = require("./config.json");
 const fs = require("fs");
+const db = require("quick.db");
 
 client.commands = new Discord.Collection();
 
@@ -77,7 +78,6 @@ client.once("ready", () => {
   }, 5000);
 
   client.user.setStatus("online");
-  // Restante do código que você deseja executar quando o bot estiver pronto
 });
 
 client.login(config.token);
@@ -85,82 +85,90 @@ client.login(config.token);
 // Comando para ver quando alguem me adiciona em seu servidor!
 
 client.on("guildCreate", async (guild) => {
-  let canal = client.guilds.cache
-    .get(`937937740018884638`)
-    .channels.cache.get(`940288512660500512`); // ID do servidor suporte e ID do chat respectivamente.
+  const canal = client.guilds.cache
+    .get("937937740018884638")
+    .channels.cache.get("940288512660500512"); // ID do servidor suporte e ID do chat respectivamente.
 
-  let embed = new Discord.MessageEmbed()
-    .setAuthor(`${client.user.username} \🕵️`, client.user.displayAvatarURL())
-    .setColor("#471516")
-    .setThumbnail("https://i.imgur.com/zNE1IMO.png")
-    .setDescription(
-      `<a:festa:1214051680774000662> **Fui adicionado em um novo servidor!**`
-    )
-    .setTimestamp();
+  const embed = {
+    color: "#471516",
+    author: {
+      name: `${client.user.username} 🕵️`,
+      icon_url: client.user.displayAvatarURL(),
+    },
+    thumbnail: {
+      url: "https://i.imgur.com/zNE1IMO.png",
+    },
+    description:
+      "<a:festa:1214051680774000662> **Fui adicionado em um novo servidor!**",
+    timestamp: new Date(),
+  };
 
-  let button = new Discord.MessageActionRow().addComponents(
-    new Discord.MessageButton()
-      .setCustomId("1")
-      .setEmoji("<:Checklist:1214067201007689818>")
-      .setLabel(`Maiores Detalhes`)
-      .setStyle("SUCCESS")
-  );
+  const button = {
+    type: "BUTTON",
+    style: "SUCCESS",
+    label: "Maiores Detalhes",
+    customId: "1",
+    emoji: "<:Checklist:1214067201007689818>",
+  };
 
-  canal.send({ embeds: [embed], components: [button] }).then((msg) => {
-    const filter = (i) => {
-      return i.isButton() && i.message.id === msg.id;
-    };
+  canal
+    .send({
+      embeds: [embed],
+      components: [{ type: "ACTION_ROW", components: [button] }],
+    })
+    .then((msg) => {
+      const filter = (i) => i.isButton() && i.message.id === msg.id;
 
-    const collector = msg
-      .createMessageComponentCollector({
-        filter: filter,
+      const collector = msg.createMessageComponentCollector({
+        filter,
         time: 60000,
-      })
-      .on("collect", async (interaction) => {
+      });
+
+      collector.on("collect", async (interaction) => {
         switch (interaction.customId) {
           case "1": {
-            const embed2 = new Discord.MessageEmbed()
-              .setColor("#471516")
-              .setAuthor(
-                `${client.user.username} \🕵`,
-                client.user.displayAvatarURL()
-              )
-              .setTimestamp()
-              .setDescription(`**Detalhes do servidor em que fui adicionado:**`)
-              .addFields({
-                name: "⠀",
-                value: `
-                          <:Faixa:1214053411218268160> __Nome:__ \`${
-                            guild.name
-                          }\`
+            const embed2 = {
+              color: "#471516",
+              author: {
+                name: `${client.user.username} 🕵️`,
+                icon_url: client.user.displayAvatarURL(),
+              },
+              timestamp: new Date(),
+              description: "**Detalhes do servidor em que fui adicionado:**",
+              fields: [
+                {
+                  name: "⠀",
+                  value: `
+                  <:Faixa:1214053411218268160> __Nome:__ \`${guild.name}\`
+                  <:Faixa:1214053411218268160> __ID:__ \`${guild.id}\`
+                  <:Faixa:1214053411218268160> __Membros:__ \`${
+                    guild.members.cache.size
+                  }\`
+                  <:Faixa:1214053411218268160> __Dono:__ ${await guild.fetchOwner()}
+                  <:Faixa:1214053411218268160> __Dono ID:__ \`${guild.ownerId}\`
+                `,
+                },
+              ],
+            };
 
-                          <:Faixa:1214053411218268160> __ID:__ \`${guild.id}\`
-                          
-                          <:Faixa:1214053411218268160> __Membros:__ \`${
-                            guild.members.cache.size
-                          }\`
-                          
-                          <:Faixa:1214053411218268160> __Dono:__ ${await guild.fetchOwner()}
-                          
-                          <:Faixa:1214053411218268160> __Dono ID:__ \`${
-                            guild.ownerId
-                          }\``,
-              });
+            const button_off = {
+              type: "BUTTON",
+              style: "SUCCESS",
+              label: "Maiores Detalhes",
+              customId: "1",
+              emoji: "<:Checklist:1214067201007689818>",
+              disabled: true,
+            };
 
-            let button_off = new Discord.MessageActionRow().addComponents(
-              new Discord.MessageButton()
-                .setCustomId("1")
-                .setEmoji("<:Checklist:1214067201007689818>")
-                .setLabel(`Maiores Detalhes`)
-                .setStyle("SUCCESS")
-                .setDisabled(true)
-            );
-
-            interaction.update({ embeds: [embed2], components: [button_off] });
+            interaction.update({
+              embeds: [embed2],
+              components: [{ type: "ACTION_ROW", components: [button_off] }],
+            });
+            break;
           }
         }
       });
-  });
+    });
 });
 
 // Comando para ver quando alguem me remove de seu servidor!
@@ -170,8 +178,10 @@ client.on("guildDelete", async (guild) => {
     .get(`937937740018884638`)
     .channels.cache.get(`940288513444823092`); // ID do servidor suporte e ID do chat respectivamente.
 
-  let embed = new Discord.MessageEmbed()
-    .setAuthor(`${client.user.username} \🕵️`, client.user.displayAvatarURL())
+  const avatar = client.user.displayAvatarURL();
+
+  let embed = new MessageEmbed()
+    .setAuthor(`${client.user.username} 🕵️`, avatar)
     .setColor("#471516")
     .setThumbnail("https://i.imgur.com/zNE1IMO.png")
     .setDescription(
@@ -179,93 +189,54 @@ client.on("guildDelete", async (guild) => {
     )
     .setTimestamp();
 
-  let button = new Discord.MessageActionRow().addComponents(
-    new Discord.MessageButton()
-      .setCustomId("1")
-      .setEmoji("<:Checklist:1214067201007689818>")
-      .setLabel(`Maiores Detalhes`)
-      .setStyle("DANGER")
-  );
-
-  canal.send({ embeds: [embed], components: [button] }).then((msg) => {
-    const filter = (i) => {
-      return i.isButton() && i.message.id == msg.id;
-    };
-
-    const collector = msg
-      .createMessageComponentCollector({
-        filter: filter,
-        time: 60000,
-      })
-      .on("collect", async (interaction) => {
-        switch (interaction.customId) {
-          case "1": {
-            const embed2 = new Discord.MessageEmbed()
-              .setColor("#471516")
-              .setAuthor(
-                `${client.user.username} \🕵️`,
-                client.user.displayAvatarURL()
-              )
-              .setDescription(`**Detalhes do servidor no qual fui removido:**`)
-              .addFields({
-                name: "⠀",
-                value: `
-                          <:Faixa:1214053411218268160> __Nome:__ \`${
-                            guild.name
-                          }\`
-
-                          <:Faixa:1214053411218268160> __ID:__ \`${guild.id}\`
-                          
-                          <:Faixa:1214053411218268160> __Membros:__ \`${
-                            guild.members.cache.size
-                          }\`
-                          
-                          <:Faixa:1214053411218268160> __Dono:__ ${await guild.fetchOwner()}
-                          
-                          <:Faixa:1214053411218268160> __Dono ID:__ \`${
-                            guild.ownerId
-                          }\``,
-              });
-
-            let button_off = new Discord.MessageActionRow().addComponents(
-              new Discord.MessageButton()
-                .setCustomId("1")
-                .setEmoji("<:Checklist:1214067201007689818>")
-                .setLabel(`Maiores Detalhes`)
-                .setStyle("DANGER")
-                .setDisabled(true)
-            );
-
-            interaction.update({ embeds: [embed2], components: [button_off] });
-
-            break;
-          }
-        }
+  canal.send({ embeds: [embed] }).then((msg) => {
+    const embed2 = new MessageEmbed()
+      .setColor("#471516")
+      .setAuthor(`${client.user.username} 🕵️`, avatar)
+      .setDescription(`**Detalhes do servidor no qual fui removido:**`)
+      .addFields({
+        name: "⠀",
+        value: `
+          <:Faixa:1214053411218268160> __Nome:__ \`${guild.name}\`
+          <:Faixa:1214053411218268160> __ID:__ \`${guild.id}\`
+          <:Faixa:1214053411218268160> __Membros:__ \`${guild.members.cache.size}\`
+          <:Faixa:1214053411218268160> __Dono:__ ${guild.owner}
+          <:Faixa:1214053411218268160> __Dono ID:__ \`${guild.ownerId}\``,
       });
+
+    let button_off = new MessageActionRow().addComponents(
+      new MessageButton()
+        .setCustomId("1")
+        .setEmoji("<:Checklist:1214067201007689818>")
+        .setLabel(`Maiores Detalhes`)
+        .setStyle("DANGER")
+        .setDisabled(true)
+    );
+
+    msg.edit({ embeds: [embed2], components: [button_off] });
   });
 });
 
 // Comando de Logs de Mensagens Editadas!
 
-client.on("messageUpdate", async (message, oldMessage) => {
-  let setlogsmsgenv = db.get(`channelLogseditmsg_${message.guild.id}`);
+client.on("messageUpdate", async (newMessage, oldMessage) => {
+  let setlogsmsgenv = db.get(`channelLogseditmsg_${newMessage.guild.id}`);
   if (setlogsmsgenv === null) return;
 
-  if (message.author.bot) return;
+  if (newMessage.author.bot) return;
 
-  let msgchannel = message.channel;
-  let msgantiga = message.content;
-  let msgeditada = oldMessage.content;
+  let msgchannel = newMessage.channel;
+  let msgantiga = oldMessage.content;
+  let msgeditada = newMessage.content;
 
-  let embed = new Discord.MessageEmbed()
+  let embed = new MessageEmbed()
     .setTitle(`\\🔎 Uma mensagem foi editada!`)
     .setColor("BLUE")
     .addFields({
       name: `\\👥 Autor da mensagem:`,
-      value: `${message.author}`,
+      value: `${newMessage.author}`,
       inline: false,
     })
-
     .addFields({
       name: `\\#️⃣ Canal:`,
       value: `${msgchannel}`,
@@ -282,13 +253,13 @@ client.on("messageUpdate", async (message, oldMessage) => {
       inline: false,
     })
     .setTimestamp()
-    .setThumbnail(message.author.displayAvatarURL({ dynamic: true }))
-    .setFooter({
-      text: `${message.guild.name}`,
-      iconURL: message.guild.iconURL({ dynamic: true }),
-    });
+    .setThumbnail(newMessage.author.displayAvatarURL({ dynamic: true }))
+    .setFooter(
+      `${newMessage.guild.name}`,
+      newMessage.guild.iconURL({ dynamic: true })
+    );
 
-  message.guild.channels.cache.get(setlogsmsgenv).send({ embeds: [embed] });
+  newMessage.guild.channels.cache.get(setlogsmsgenv).send({ embeds: [embed] });
 });
 
 // Comando de Logs para Mensagens Apagadas!
@@ -303,7 +274,7 @@ client.on("messageDelete", async (message) => {
   let channel2 = message.channel;
   let msgDelete = message.content;
 
-  let embed = new Discord.MessageEmbed()
+  let embed = new MessageEmbed()
     .setTitle(`\\🚽 Uma mensagem foi excluída!`)
     .setColor("BLUE")
     .addFields({
@@ -322,22 +293,24 @@ client.on("messageDelete", async (message) => {
       inline: false,
     })
     .setTimestamp()
-    .setFooter({
-      text: `${message.guild.name}`,
-      iconURL: message.guild.iconURL({ dynamic: true }),
-    })
+    .setFooter(
+      `${message.guild.name}`,
+      message.guild.iconURL({ dynamic: true })
+    )
     .setThumbnail(message.author.displayAvatarURL({ dynamic: true }));
 
   try {
     message.guild.channels.cache.get(channelDellogs).send({ embeds: [embed] });
-  } catch (e) {}
+  } catch (e) {
+    console.error(e); // Adicionei um log de erro para identificar possíveis problemas
+  }
 });
 
 // Comando de Antilink!
 
 client.on("messageCreate", async (message) => {
   if (message.author.bot) return;
-  if (message.channel.type == "dm") return;
+  if (message.channel.type === "dm") return;
 
   let verificando = db.get(`antilink_${message.guild.id}`);
   if (
@@ -349,24 +322,24 @@ client.on("messageCreate", async (message) => {
     return;
 
   if (verificando === "on") {
-    let degabrielofiproibido = new Discord.MessageEmbed()
-
+    let degabrielofiproibido = new MessageEmbed()
       .setDescription(
         `<a:Incorreto:1214051678089777212>**| Você não pode enviar links aqui!**`
       )
       .setFooter(`Requisitado por: ${message.author.tag}`)
       .setColor("RED");
 
-    if (message.member.permissions.has("MANAGE_GUILD")) return;
-    if (message.member.permissions.has("ADMINISTRATOR")) return;
+    if (
+      message.member.permissions.has("MANAGE_GUILD") ||
+      message.member.permissions.has("ADMINISTRATOR")
+    )
+      return;
+
+    const linkPatterns = ["https", "http", "www", ".com", ".br"];
 
     if (
-      message.content.includes(
-        "https".toLowerCase() ||
-          "http".toLowerCase() ||
-          "www".toLowerCase() ||
-          ".com".toLowerCase() ||
-          ".br".toLowerCase()
+      linkPatterns.some((pattern) =>
+        message.content.toLowerCase().includes(pattern)
       )
     ) {
       message.delete();

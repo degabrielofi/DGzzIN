@@ -7,7 +7,6 @@ module.exports = {
 
   run: async (client, message, args) => {
     let degabrielofipermision = new MessageEmbed()
-
       .setDescription(
         `<a:Incorreto:1214051678089777212>**| Você não tem permissão para utilizar este comando!**`
       )
@@ -48,12 +47,14 @@ module.exports = {
         }
       );
 
-    if (!args[0])
+    if (!args[0]) {
       return message.reply({
         content: `${message.author}`,
         embeds: [degabrielofiembed],
       });
-    if (!message.member.permissions.has("KICK_MEMBERS"))
+    }
+
+    if (!message.member.permissions.has("KICK_MEMBERS")) {
       return message
         .reply({
           content: `${message.author}`,
@@ -63,6 +64,7 @@ module.exports = {
           message.delete();
           setTimeout(() => msg.delete(), 10000);
         });
+    }
 
     const usu =
       message.mentions.members.first() ||
@@ -76,10 +78,38 @@ module.exports = {
     let reason = args.slice(1).join(" ");
     if (!reason) reason = "Sem Motivo";
 
+    let degabrielofisetchannel = new MessageEmbed()
+      .setDescription(
+        `<a:Incorreto:1214051678089777212>**| Este servidor não setou nenhum canal de expulsões!**`
+      )
+      .setFooter(`Requisitado por: ${message.author.tag}`)
+      .setColor("RED");
+
     let channelID = db.get(`${message.guild.id}_channelID`);
-    if (!channelID) return;
+    if (!channelID) {
+      return message
+        .reply({
+          content: `${message.author}`,
+          embeds: [degabrielofisetchannel],
+        })
+        .then((msg) => {
+          message.delete();
+          setTimeout(() => msg.delete(), 10000);
+        });
+    }
+
     let channel = message.guild.channels.cache.get(channelID);
-    if (!channel) return;
+    if (!channel) {
+      return message
+        .reply({
+          content: `${message.author}`,
+          embeds: [degabrielofisetchannel],
+        })
+        .then((msg) => {
+          message.delete();
+          setTimeout(() => msg.delete(), 10000);
+        });
+    }
 
     let clearbutton = new MessageActionRow().addComponents(
       new MessageButton()
@@ -123,17 +153,12 @@ module.exports = {
         }
       );
 
-    if (!args[0])
+    if (!usu) {
       return message.channel.send({
         content: `${message.author}`,
         embeds: [incomplet],
       });
-
-    if (!usu)
-      return message.channel.send({
-        content: `${message.author}`,
-        embeds: [incomplet],
-      });
+    }
 
     let confirm = new MessageEmbed()
       .setTitle("<a:Sirene:1214051670343028776> CONFIRME A EXPULSÃO")
@@ -159,24 +184,26 @@ module.exports = {
 
     collector.on("collect", async (interaction) => {
       let degabrielofipermision2 = new MessageEmbed()
-
         .setDescription(
           `<a:Incorreto:1214051678089777212>**| Apenas Administradores podem limpar o chat!**`
         )
         .setFooter(`Requisitado por: ${message.author.tag}`)
         .setColor("RED");
 
-      if (!interaction.memberPermissions.has("ADMINISTRATOR"))
+      if (!interaction.memberPermissions.has("ADMINISTRATOR")) {
         return interaction
           .reply({
             content: `${interaction.user}`,
             embeds: [degabrielofipermision2],
             ephemeral: true,
+            client: client, // Adicione esta linha
           })
           .then((msg) => {
             message.delete();
             setTimeout(() => msg.delete(), 10000);
           });
+      }
+
       if (interaction.customId === "sim") {
         let sucess = new MessageEmbed()
           .setTitle(
@@ -194,7 +221,7 @@ module.exports = {
         const banmsg = new MessageEmbed()
           .setTitle("<:punido:1214053415244660787> Usuário punido!")
           .setColor("RED")
-          .setThumbnail(message.author.displayAvatarURL({ format: "png" }))
+          .setThumbnail(usu.displayAvatarURL({ format: "png" })) // Correção aqui
           .setFooter(
             `Comando requisitado por: ${message.author.tag}`,
             message.author.displayAvatarURL({ format: "png" })
@@ -231,7 +258,6 @@ module.exports = {
 
       if (interaction.customId === "nao") {
         let degabrielofinao = new MessageEmbed()
-
           .setDescription(
             `<a:Incorreto:1214051678089777212>**| Você cancelou a ação de expulsão!**`
           )

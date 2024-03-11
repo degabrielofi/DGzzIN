@@ -47,8 +47,8 @@ module.exports = {
           value: `> \\🆔 Meu id: \`844065812355612702\`
                 > \\📅 Data de criação: \`18/05/2021\`
                 > <:JavaScript:1214053408705613834> Fui programado em: \`JavaScript\`
-                > \\📊 Utilizei a livraria: \`Discord.js\`
-                > \\📲 Estou hospedado na: \`DisCloud\``,
+                > <:DiscordJS:1216229350408585216> Utilizei a livraria: \`Discord.js\`
+                > \\📲 Estou hospedado na: \`DeGabrielDEV\``,
           inline: false,
         }
       );
