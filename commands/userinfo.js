@@ -1,41 +1,26 @@
-const Discord = require("discord.js");
+const { MessageActionRow, MessageButton, MessageEmbed } = require("discord.js");
 const moment = require("moment");
 moment.locale("pt-br");
-const now = moment();
 
 module.exports = {
   name: "userinfo",
   aliases: [""],
 };
 
-module.exports.run = (client, message, args) => {
-  let baliza_user =
+module.exports.run = async (client, message, args) => {
+  const baliza_user =
     message.mentions.members.first() ||
     message.guild.members.cache.get(args[0]) ||
     message.member;
 
-  let status;
-  if (baliza_user) {
-    const userPresence = baliza_user.presence;
-
-    if (userPresence && userPresence.status) {
-      status = getStatusFromPresence(userPresence) || "Offline";
-    } else {
-      status = "Desconhecido";
-    }
-  } else {
-    status = "Desconhecido";
-  }
-
-  // Função auxiliar para obter o status apropriado
   function getStatusFromPresence(presence) {
-    const activities = presence.activities;
+    const activities = presence?.activities || [];
     if (activities.length > 0) {
       return activities[0].type === "CUSTOM_STATUS"
         ? activities[0].state
-        : activities[0].name;
+        : activities[0].name || "Online";
     } else {
-      switch (presence.status) {
+      switch (presence?.status) {
         case "online":
           return "Online";
         case "dnd":
@@ -49,6 +34,11 @@ module.exports.run = (client, message, args) => {
       }
     }
   }
+
+  const getStatus = (user) => {
+    const userPresence = user.presence;
+    return userPresence ? getStatusFromPresence(userPresence) : "Desconhecido";
+  };
 
   const flags = {
     DISCORD_EMPLOYEE: "Empregado do Discord",
@@ -72,15 +62,13 @@ module.exports.run = (client, message, args) => {
     message.author;
   const Membro = message.guild.members.cache.get(user.id);
   const member = message.mentions.members.last() || message.member;
-  const data = user.createdAt.toLocaleDateString("pt-br");
   const avatar = user.displayAvatarURL({ dynamic: true });
-  const userFlags = member.user.flags.toArray();
 
-  let degabrielofiembed = new Discord.MessageEmbed()
-    .setAuthor(`${user.username} 🕵️`, user.displayAvatarURL({ dynamic: true }))
+  const degabrielofiembed = new MessageEmbed()
+    .setAuthor(`${user.username} 🕵️`, avatar)
     .setFooter(`Page 1 / 2`)
     .setThumbnail(avatar)
-    .setColor("BLUE")
+    .setColor("#3498db")
     .setTimestamp()
     .addFields(
       {
@@ -95,7 +83,7 @@ module.exports.run = (client, message, args) => {
       },
       {
         name: `\\💤 Status:`,
-        value: `\`${status}\``,
+        value: `\`${getStatus(baliza_user)}\``,
         inline: true,
       },
       {
@@ -124,145 +112,95 @@ module.exports.run = (client, message, args) => {
       }
     );
 
-  message
-    .reply({ content: `${message.author}`, embeds: [degabrielofiembed] })
+  const degabrielofiembed2 = new MessageEmbed()
+    .setAuthor(`${user.username} 🕵️`, avatar)
+    .setFooter(`Page 2 / 2`)
+    .setThumbnail(avatar)
+    .setColor("#3498db")
+    .setTimestamp()
+    .addFields(
+      {
+        name: `\\📸 Avatar:`,
+        value: `**[Clique aqui](${member.user.displayAvatarURL({
+          dynamic: true,
+        })})**`,
+        inline: true,
+      },
+      {
+        name: `\\🛡️ Emblema:`,
+        value: `\`${
+          member.user.flags.toArray().length
+            ? member.user.flags
+                .toArray()
+                .map((flag) => flags[flag])
+                .join(", ")
+            : "None"
+        }\``,
+        inline: true,
+      },
+      {
+        name: `\\🎮 Atividade:`,
+        value: `\`(${
+          baliza_user.presence?.activities[0]
+            ? baliza_user.presence.activities[0].name
+            : `O usuário não está fazendo nada no momento!`
+        })\``,
+        inline: true,
+      },
+      {
+        name: "\\👥 Autor do comando:",
+        value: `\`${message.author.tag}\``,
+        inline: true,
+      },
+      {
+        name: `\\💼 Cargos:`,
+        value: `${Membro.roles.cache
+          .map((r) => `${r}`)
+          .join(" ")
+          .replace("@everyone", " ")}`,
+        inline: true,
+      }
+    );
 
-    .then(async (msg) => {
-      const pages = [
-        {
-          author: `${user.username} 🕵️`,
-          footer: "Page 1 / 2",
-          color: "BLUE",
-          thumbnail: avatar,
-          timestamp: true,
-          fields: [
-            {
-              name: `\\#️⃣ Tag do discord:`,
-              value: `\`${user.tag}\``,
-              inline: true,
-            },
-            { name: `\\🆔 ID:`, value: `\`${user.id}\``, inline: true },
-            { name: `\\💤 Status:`, value: `\`${status}\``, inline: true },
-            { name: "\u200b", value: `\u200b`, inline: true },
-            {
-              name: `\\📅 Data de criação:`,
-              value: `\`${moment(user.createdAt).format("DD/MM/YYYY")} ${moment(
-                user.createdAt
-              ).fromNow()}\``,
-              inline: true,
-            },
-            {
-              name: `\\🌟 Entrou em:`,
-              value: `\`${moment(Membro.joinedAt).format(
-                "DD/MM/YYYY"
-              )} ${moment(Membro.joinedAt).fromNow()}\``,
-              inline: true,
-            },
-            {
-              name: "\\👥 Autor do comando:",
-              value: `\`${message.author.tag}\``,
-              inline: true,
-            },
-          ],
-        },
-        {
-          author: `${user.username} 🕵️`,
-          footer: "Page 2 / 2",
-          color: "BLUE",
-          thumbnail: avatar,
-          timestamp: true,
-          fields: [
-            {
-              name: `\\📸 Avatar:`,
-              value: `**[Clique aqui](${member.user.displayAvatarURL({
-                dynamic: true,
-              })})**`,
-              inline: true,
-            },
-            {
-              name: `\\🛡️ Emblema:`,
-              value: `\`${
-                userFlags.length
-                  ? userFlags.map((flag) => flags[flag]).join(", ")
-                  : "None"
-              }\``,
-              inline: true,
-            },
-            {
-              name: `\\🎮 Atividade:`,
-              value: `\`(${
-                baliza_user.presence.activities[0]
-                  ? baliza_user.presence.activities[0].name
-                  : `O usuário não está fazendo nada no momento!`
-              })\``,
-              inline: true,
-            },
-            {
-              name: "\\👥 Autor do comando:",
-              value: `\`${message.author.tag}\``,
-              inline: true,
-            },
-            {
-              name: `\\💼 Cargos:`,
-              value: `${Membro.roles.cache
-                .map((r) => `${r}`)
-                .join(" ")
-                .replace("@everyone", " ")}`,
-              inline: true,
-            },
-          ],
-        },
-      ];
+  const pages = [degabrielofiembed, degabrielofiembed2];
+  let currentPage = 0;
 
-      let currentPage = 0;
+  const msg = await message.reply({
+    content: `${message.author}`,
+    embeds: [pages[currentPage]],
+    components: [getPageButtons()],
+  });
 
-      const updateEmbed = async () => {
-        const page = pages[currentPage];
-        const embed = new Discord.MessageEmbed()
-          .setAuthor(page.author, user.displayAvatarURL({ dynamic: true }))
-          .setFooter(page.footer)
-          .setColor(page.color)
-          .setThumbnail(page.thumbnail)
-          .setTimestamp(page.timestamp);
+  const collector = msg.createMessageComponentCollector({
+    componentType: "BUTTON",
+    time: 60000,
+  });
 
-        embed.addFields(...page.fields);
+  collector.on("collect", async (interaction) => {
+    if (interaction.customId === "previous") {
+      currentPage = (currentPage - 1 + pages.length) % pages.length;
+    } else if (interaction.customId === "next") {
+      currentPage = (currentPage + 1) % pages.length;
+    }
 
-        await msg.edit({ content: `${message.author}`, embeds: [embed] });
-      };
-
-      await msg.react("⏪");
-      await msg.react("⏩");
-
-      const filter = (reaction, user) => {
-        return (
-          ["⏪", "⏩"].includes(reaction.emoji.name) &&
-          user.id === message.author.id
-        );
-      };
-
-      const collector = msg.createReactionCollector({
-        filter,
-        time: 60000, // Tempo limite em milissegundos (60 segundos neste caso)
-      });
-
-      collector.on("collect", async (reaction, user) => {
-        reaction.users.remove(user.id);
-
-        if (reaction.emoji.name === "⏪") {
-          currentPage = (currentPage - 1 + pages.length) % pages.length;
-        } else if (reaction.emoji.name === "⏩") {
-          currentPage = (currentPage + 1) % pages.length;
-        }
-
-        await updateEmbed();
-      });
-
-      collector.on("end", () => {
-        msg.reactions
-          .removeAll()
-          .catch((error) => console.error("Failed to clear reactions:", error));
-      });
-
-      await updateEmbed();
+    await interaction.update({
+      embeds: [pages[currentPage]],
+      components: [getPageButtons()],
     });
+  });
+
+  function getPageButtons() {
+    return new MessageActionRow().addComponents(
+      new MessageButton()
+        .setCustomId("previous")
+        .setLabel("Página Anterior")
+        .setStyle("PRIMARY")
+        .setDisabled(currentPage === 0),
+      new MessageButton()
+        .setCustomId("next")
+        .setLabel("Próxima Página")
+        .setStyle("PRIMARY")
+        .setDisabled(currentPage === pages.length - 1)
+    );
+  }
 };
