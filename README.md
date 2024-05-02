@@ -37,14 +37,14 @@ Reunidos cuidadosamente em um só lugar, estarão informações sobre o progress
 
 Este site reflete a essência do meu trabalho e a minha dedicação em oferecer uma experiência incrível aos usuários do DGzzIN ツ. Descubra, deixe-se levar e conheça o máximo do que realizei até agora. Bem-vindo e aproveite para descobrir o mundo do DGzzIN ツ!
 
-Abaixo podemos ver o resultado final do projeto. Espero que gostem!
+Abaixo podemos ver a utilização de alguns comandos da nossa aplicação. Espero que gostem!
 
 <br>
 <p align="center">
-  <img alt="MyLinks" src="./src/assets/videos/DGzzIN.gif" width="70%"> 
+  <img alt="MyLinks" src="./assets/GitHub/DGzzIN.gif" width="70%"> 
 </p>
 
-# 🔗 Acesse o site com o link abaixo
+# 🔗 Acesse o site e adicione o DGzzIN ツ com o link abaixo ⤵️
 
 - [DGzzIN ツ | O Seu BOT para o Discord](https://dgzzinbot.netlify.app/)
 
@@ -53,7 +53,7 @@ Abaixo podemos ver o resultado final do projeto. Espero que gostem!
 🖨️ #Clonando o repositório do Github:
 
 ```
-$ git clone https://github.com/degabrielofi/DGzzIN_Web
+$ git clone https://github.com/degabrielofi/DGzzIN
 ```
 
 🗃️ #Instalação de packages:
@@ -65,28 +65,15 @@ $ npm i .
 ✅ #Inicializar projeto:
 
 ```
-$ npm run start
-```
-
-## ➿ Running the app
-
-Para colocar o aplicativo em funcionamento (e realmente ver se ele funcionou), execute:
-
-```shell
-npm run start
+$ node index.js
 ```
 
 ## :computer: Tecnologias utilizadas
 
 Este projeto foi desenvolvido com as seguintes tecnologias:
 
-- [React.js](https://pt-br.reactjs.org/)
 - [Node.js](https://nodejs.org/en/)
 - [JavaScript](https://www.javascript.com/)
-- [Bootstrap](https://getbootstrap.com/)
-- [Styled-Components](https://styled-components.com/)
-- [HTML](https://developer.mozilla.org/pt-BR/docs/Web/HTML)
-- [CSS](https://developer.mozilla.org/pt-BR/docs/Web/CSS)
 
 ## 🤝 Colaboradores
 
@@ -108,5 +95,5 @@ Agradecemos às seguintes pessoas que contribuíram para este projeto:
 ##
 
 <p align="center">
-  <img src="./src/assets/images/Icon.png" width="15%">
+  <img src="./assets/GitHub/Icon.png" width="15%">
 </p>
