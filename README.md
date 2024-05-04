@@ -77,6 +77,8 @@ Este projeto foi desenvolvido com as seguintes tecnologias:
 
 ## 🤝 Colaboradores
 
+Contribuições para o DGzzIN ツ são bem-vindas! Se você tem sugestões de novos comandos, melhorias na funcionalidade existente ou correções de bugs, sinta-se à vontade para abrir uma issue ou enviar um pull request por aqui no GitHub.
+
 Agradecemos às seguintes pessoas que contribuíram para este projeto:
 
 <table>
