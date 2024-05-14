@@ -29,55 +29,66 @@ Se você tiver problemas com qualquer um deles, saiba mais sobre o ambiente PATH
 
 # :clipboard: Sobre o projeto
 
-Bem-vindo à página do DGzzIN ツ - o seu Bot para Discord!
+O DGzzIN ツ é um bot desenvolvido para Discord, totalmente construído em JavaScript utilizando a biblioteca Discord.js. Ele foi criado a partir da minha paixão por trazer funcionalidade e diversão para comunidades online, mesmo sem experiência prévia em programação.
 
-Aqui, convido você a descobrir o universo do DGzzIN ツ, um bot criado para Discord que oferece funcionalidades e entretenimento para servidores online. Neste site, você poderá explorar meu processo de crescimento e encontrar alguns dos recursos mais importantes que o DGzzIN ツ oferece.
+### Visão Geral:
 
-Reunidos cuidadosamente em um só lugar, estarão informações sobre o progresso do bot, sua evolução ao longo do tempo e as principais funcionalidades implementadas para aprimorar a experiência dos utilizadores. Neste local, é viável experimentar comandos de entretenimento, regulação, dados e ferramentas que foram elaborados com atenção para tornar os servidores do Discord mais vibrantes e participativos.
+O DGzzIN ツ foi projetado para oferecer uma variedade de comandos e funcionalidades para servidores do Discord, incluindo recursos de diversão, moderação, informações e utilidades. Com uma interface simples e amigável, o bot pode ser facilmente adicionado a qualquer servidor Discord para melhorar a experiência dos membros e moderadores.
 
-Este site reflete a essência do meu trabalho e a minha dedicação em oferecer uma experiência incrível aos usuários do DGzzIN ツ. Descubra, deixe-se levar e conheça o máximo do que realizei até agora. Bem-vindo e aproveite para descobrir o mundo do DGzzIN ツ!
+### Funcionalidades Principais:
 
-Abaixo podemos ver a utilização de alguns comandos da nossa aplicação. Espero que gostem!
+- **Diversão:** O DGzzIN ツ possui uma ampla gama de comandos divertidos para entreter os membros do servidor, incluindo jogos, piadas e interações engraçadas.
+
+- **Moderação:** Para manter a ordem e o bom funcionamento do servidor, o DGzzIN ツ oferece ferramentas de moderação, como banimentos, mutações, limpeza de chat e muito mais.
+
+- **Informações:** Os comandos de informação permitem aos usuários acessarem rapidamente dados úteis, como previsão do tempo, cotações de moeda, informações de usuários e muito mais.
+
+- **Utilidades:** Além disso, o DGzzIN ツ oferece uma variedade de utilidades, como geração de memes, pesquisa de imagens, tradução de idiomas e outros recursos úteis.
+
+### Como Usar?
+
+Para adicionar o DGzzIN ツ ao seu servidor Discord, basta seguir o link de convite fornecido na documentação ou na página do projeto no GitHub. Após a adição, você pode começar a usar os comandos do bot imediatamente e personalizá-lo de acordo com as necessidades do seu servidor.
+
+### Contribuições:
+
+Contribuições para o DGzzIN ツ são bem-vindas! Se você tem sugestões de novos comandos, melhorias na funcionalidade existente ou correções de bugs, sinta-se à vontade para abrir uma issue ou enviar um pull request no GitHub.
+
+### Agradecimentos:
+
+Agradeço por usar o DGzzIN ツ e espero que ele seja uma adição valiosa ao seu servidor Discord. Se você tiver alguma dúvida ou precisar de suporte, não hesite em entrar em contato.
+
+Abaixo podemos ver o resultado final do projeto. Espero que gostem!
 
 <br>
 <p align="center">
-  <img alt="MyLinks" src="./assets/GitHub/DGzzIN.gif" width="70%"> 
+  <img alt="MyLinks" src="./src/assets/videos/DGzzIN.gif" width="70%"> 
 </p>
 
-# 🔗 Acesse o site e adicione o DGzzIN ツ com o link abaixo ⤵️
+# 🔗 Acesse o site com o link abaixo
 
 - [DGzzIN ツ | O Seu BOT para o Discord](https://dgzzinbot.netlify.app/)
 
-## ⚙️ Configuração
+## ➿ Running the app
 
-🖨️ #Clonando o repositório do Github:
+Para colocar o aplicativo em funcionamento (e realmente ver se ele funcionou), execute:
 
-```
-$ git clone https://github.com/degabrielofi/DGzzIN
-```
-
-🗃️ #Instalação de packages:
-
-```
-$ npm i .
-```
-
-✅ #Inicializar projeto:
-
-```
-$ node index.js
+```shell
+npm run start
 ```
 
 ## :computer: Tecnologias utilizadas
 
 Este projeto foi desenvolvido com as seguintes tecnologias:
 
+- [React.js](https://pt-br.reactjs.org/)
 - [Node.js](https://nodejs.org/en/)
 - [JavaScript](https://www.javascript.com/)
+- [Bootstrap](https://getbootstrap.com/)
+- [Styled-Components](https://styled-components.com/)
+- [HTML](https://developer.mozilla.org/pt-BR/docs/Web/HTML)
+- [CSS](https://developer.mozilla.org/pt-BR/docs/Web/CSS)
 
 ## 🤝 Colaboradores
-
-Contribuições para o DGzzIN ツ são bem-vindas! Se você tem sugestões de novos comandos, melhorias na funcionalidade existente ou correções de bugs, sinta-se à vontade para abrir uma issue ou enviar um pull request por aqui no GitHub.
 
 Agradecemos às seguintes pessoas que contribuíram para este projeto:
 
@@ -97,5 +108,5 @@ Agradecemos às seguintes pessoas que contribuíram para este projeto:
 ##
 
 <p align="center">
-  <img src="./assets/GitHub/Icon.png" width="15%">
+  <img src="./src/assets/GitHub/Icon.png" width="15%">
 </p>
