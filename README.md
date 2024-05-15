@@ -1,7 +1,7 @@
 <h1 align="center">🤖 DGzzIN ツ</h1>
 
 <p align="center">
-  <img alt="MyLinks" src="./src/assets/images/Mockup.png" width="70%"> 
+  <img alt="MyLinks" src="./assets/GitHub/Mockup.png" width="70%"> 
   </p>
 
   <p align="center">
@@ -61,7 +61,7 @@ Abaixo podemos ver o resultado final do projeto. Espero que gostem!
 
 <br>
 <p align="center">
-  <img alt="MyLinks" src="./src/assets/videos/DGzzIN.gif" width="70%"> 
+  <img alt="MyLinks" src="./assets/GitHub/DGzzIN.gif" width="70%"> 
 </p>
 
 # 🔗 Acesse o site com o link abaixo
@@ -108,5 +108,5 @@ Agradecemos às seguintes pessoas que contribuíram para este projeto:
 ##
 
 <p align="center">
-  <img src="./src/assets/GitHub/Icon.png" width="15%">
+  <img src="./assets/GitHub/Icon.png" width="15%">
 </p>

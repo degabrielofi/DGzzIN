@@ -7,9 +7,16 @@ const client = new Discord.Client({
     Discord.Intents.FLAGS.GUILD_MEMBERS,
   ],
 });
-const config = require("./config.json");
 const fs = require("fs");
 const db = require("quick.db");
+const dotenv = require("dotenv");
+
+dotenv.config();
+
+const config = {
+  token: process.env.TOKEN,
+  prefix: process.env.PREFIX,
+};
 
 client.commands = new Discord.Collection();
 
@@ -82,7 +89,7 @@ client.once("ready", () => {
 
 client.login(config.token);
 
-// Comando para ver quando alguem me adiciona em seu servidor!
+// Comando para ver quando alguém me adiciona em seu servidor!
 
 client.on("guildCreate", async (guild) => {
   const canal = client.guilds.cache
@@ -171,7 +178,7 @@ client.on("guildCreate", async (guild) => {
     });
 });
 
-// Comando para ver quando alguem me remove de seu servidor!
+// Comando para ver quando alguém me remove de seu servidor!
 
 client.on("guildDelete", async (guild) => {
   let canal = client.guilds.cache
