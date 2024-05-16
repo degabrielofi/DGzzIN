@@ -49,10 +49,6 @@ O DGzzIN ツ foi projetado para oferecer uma variedade de comandos e funcionalid
 
 Para adicionar o DGzzIN ツ ao seu servidor Discord, basta seguir o link de convite fornecido na documentação ou na página do projeto no GitHub. Após a adição, você pode começar a usar os comandos do bot imediatamente e personalizá-lo de acordo com as necessidades do seu servidor.
 
-### Contribuições:
-
-Contribuições para o DGzzIN ツ são bem-vindas! Se você tem sugestões de novos comandos, melhorias na funcionalidade existente ou correções de bugs, sinta-se à vontade para abrir uma issue ou enviar um pull request no GitHub.
-
 ### Agradecimentos:
 
 Agradeço por usar o DGzzIN ツ e espero que ele seja uma adição valiosa ao seu servidor Discord. Se você tiver alguma dúvida ou precisar de suporte, não hesite em entrar em contato.
@@ -87,6 +83,10 @@ Este projeto foi desenvolvido com as seguintes tecnologias:
 - [Styled-Components](https://styled-components.com/)
 - [HTML](https://developer.mozilla.org/pt-BR/docs/Web/HTML)
 - [CSS](https://developer.mozilla.org/pt-BR/docs/Web/CSS)
+
+### Contribuições:
+
+Contribuições para o DGzzIN ツ são bem-vindas! Se você tem sugestões de novos comandos, melhorias na funcionalidade existente ou correções de bugs, sinta-se à vontade para abrir uma issue ou enviar um pull request no GitHub.
 
 ## 🤝 Colaboradores
 
